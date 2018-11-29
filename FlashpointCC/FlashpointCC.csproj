@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ScreenCapture.cs" />
     <Compile Include="Column.cs" />
     <Compile Include="ColumnPriorityForm.cs">
       <SubType>Form</SubType>

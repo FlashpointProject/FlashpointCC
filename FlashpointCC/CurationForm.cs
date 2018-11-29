@@ -5,11 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -24,6 +26,21 @@ namespace FlashpointCurator
         private IContentSource source;
         private TreeNode executable;
         private string flashpointPath;
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern int GetClientRect(System.IntPtr hWnd, ref Rectangle lpRECT);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
+        private static extern bool IsIconic(IntPtr hwnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool IsWindowVisible(IntPtr hWnd);
+        [DllImport("user32.dll", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
+        public static extern int SetForegroundWindow(int hwnd);
+
+        public static Bitmap logo;
+        public static Bitmap gamescreen;
 
         public CurationForm(string flashpointPath)
         {
@@ -176,6 +193,22 @@ namespace FlashpointCurator
             return commandLine;
         }
 
+        public bool IsValidImage(string path)
+        {
+            string[] extensions = { "png", "jpg", "jpeg", "gif", "bmp" };
+
+            if (extensions.Contains(Path.GetExtension(path).ToLowerInvariant().Replace(".", "")))
+            {
+                return true;
+            }
+
+            else
+            {
+                MessageBox.Show("Please use a valid image format (PNG, JPG, JPEG, GIF, BMP)", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+        }
+
         private void ScreenshotPictureBox_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
@@ -190,8 +223,11 @@ namespace FlashpointCurator
         {
             foreach (string pic in ((string[])e.Data.GetData(DataFormats.FileDrop)))
             {
-                Image img = Image.FromFile(pic);
-                screenshotPictureBox.Image = img;
+                if (IsValidImage(pic))
+                {
+                    Image img = Image.FromFile(pic);
+                    screenshotPictureBox.Image = img;
+                }
             }
         }
 
@@ -199,8 +235,11 @@ namespace FlashpointCurator
         {
             foreach (string pic in ((string[])e.Data.GetData(DataFormats.FileDrop)))
             {
-                Image img = Image.FromFile(pic);
-                logoPictureBox.Image = img;
+                if (IsValidImage(pic))
+                {
+                    Image img = Image.FromFile(pic);
+                    logoPictureBox.Image = img;
+                }
             }
         }
 
@@ -356,6 +395,57 @@ namespace FlashpointCurator
             logoPictureBox.Image.Save(logoPath, ImageFormat.Png);
             screenshotPictureBox.Image.Save(ssPath, ImageFormat.Png);
             MessageBox.Show("Added to Flashpoint!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public Bitmap CaptureGameWindow()
+        {
+            Platform platform = (Platform)platformComboBox.SelectedItem;
+            Process[] players = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(platform.ApplicationPath));
+
+            if (players.Length == 0)
+            {
+                MessageBox.Show("No game window detected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
+            IntPtr player = players[0].MainWindowHandle;
+
+            Rectangle pic = new Rectangle();
+            GetClientRect(player, ref pic);
+
+            ScreenShot.ScreenCapture screenshot = new ScreenShot.ScreenCapture();
+            Bitmap image = (Bitmap)screenshot.CaptureWindow(player);
+
+            int border = (image.Width - pic.Width) / 2;
+            int top = image.Height - pic.Height - border;
+
+            Rectangle crop = new Rectangle(border, top, pic.Width, pic.Height);
+
+            if (IsIconic(player) | crop.IsEmpty | crop.Width == 0 | crop.Height == 0)
+            {
+                MessageBox.Show("Please make sure the game is not minimized", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                SetForegroundWindow((int)player);
+                SendKeys.SendWait("~");
+                return null;
+            }
+
+            else
+            {
+                Bitmap cropped = image.Clone(crop, image.PixelFormat);
+                return cropped;
+            }
+        }
+
+        private void captureLogoButton_Click(object sender, EventArgs e)
+        {
+            logo = CaptureGameWindow();
+            logoPictureBox.Image = logo;
+        }
+
+        private void captureScreenshotButton_Click(object sender, EventArgs e)
+        {
+            gamescreen = CaptureGameWindow();
+            screenshotPictureBox.Image = gamescreen;
         }
     }
 }

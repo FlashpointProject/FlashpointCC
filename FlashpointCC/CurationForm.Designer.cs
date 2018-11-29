@@ -60,15 +60,17 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label11 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.treeViewIcons = new System.Windows.Forms.ImageList(this.components);
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.treeView = new System.Windows.Forms.TreeView();
-            this.treeViewIcons = new System.Windows.Forms.ImageList(this.components);
             this.extremeCheckBox = new System.Windows.Forms.CheckBox();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.flagAsExecutableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label14 = new System.Windows.Forms.Label();
+            this.treeView = new System.Windows.Forms.TreeView();
+            this.captureLogoButton = new System.Windows.Forms.Button();
+            this.captureScreenshotButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
@@ -323,7 +325,7 @@
             this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logoPictureBox.Location = new System.Drawing.Point(3, 16);
             this.logoPictureBox.Name = "logoPictureBox";
-            this.logoPictureBox.Size = new System.Drawing.Size(201, 165);
+            this.logoPictureBox.Size = new System.Drawing.Size(201, 141);
             this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.logoPictureBox.TabIndex = 2;
             this.logoPictureBox.TabStop = false;
@@ -333,7 +335,7 @@
             this.screenshotPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.screenshotPictureBox.Location = new System.Drawing.Point(210, 16);
             this.screenshotPictureBox.Name = "screenshotPictureBox";
-            this.screenshotPictureBox.Size = new System.Drawing.Size(201, 165);
+            this.screenshotPictureBox.Size = new System.Drawing.Size(201, 141);
             this.screenshotPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.screenshotPictureBox.TabIndex = 3;
             this.screenshotPictureBox.TabStop = false;
@@ -364,33 +366,33 @@
             this.imagePanel.Controls.Add(this.tableLayoutPanel3);
             this.imagePanel.Location = new System.Drawing.Point(12, 235);
             this.imagePanel.Name = "imagePanel";
-            this.imagePanel.Size = new System.Drawing.Size(629, 203);
+            this.imagePanel.Size = new System.Drawing.Size(629, 225);
             this.imagePanel.TabIndex = 6;
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.label11, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.label11, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel2, 0, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 6);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(629, 203);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(629, 216);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // label11
             // 
-            this.label11.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(250, 190);
+            this.label11.Location = new System.Drawing.Point(188, 196);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(129, 13);
+            this.label11.Size = new System.Drawing.Size(252, 20);
             this.label11.TabIndex = 0;
-            this.label11.Text = "Drag and drop to change.";
+            this.label11.Text = "Drag and drop files to add logo, image, and content.";
             // 
             // tableLayoutPanel2
             // 
@@ -404,14 +406,36 @@
             this.tableLayoutPanel2.Controls.Add(this.screenshotPictureBox, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.label12, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.label13, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.captureLogoButton, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.captureScreenshotButton, 1, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(623, 184);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(623, 190);
             this.tableLayoutPanel2.TabIndex = 3;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(496, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(44, 13);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "Content";
+            // 
+            // treeViewIcons
+            // 
+            this.treeViewIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("treeViewIcons.ImageStream")));
+            this.treeViewIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.treeViewIcons.Images.SetKeyName(0, "fileIcon.png");
+            this.treeViewIcons.Images.SetKeyName(1, "folderIcon.png");
+            this.treeViewIcons.Images.SetKeyName(2, "folderOpenIcon.png");
+            this.treeViewIcons.Images.SetKeyName(3, "joystick.png");
             // 
             // label12
             // 
@@ -439,26 +463,6 @@
             this.saveFileDialog.Filter = "ZIP Archives (*.zip)|*.zip";
             this.saveFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog_FileOk);
             // 
-            // treeView
-            // 
-            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView.ImageIndex = 0;
-            this.treeView.ImageList = this.treeViewIcons;
-            this.treeView.Location = new System.Drawing.Point(417, 16);
-            this.treeView.Name = "treeView";
-            this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(203, 165);
-            this.treeView.TabIndex = 7;
-            // 
-            // treeViewIcons
-            // 
-            this.treeViewIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("treeViewIcons.ImageStream")));
-            this.treeViewIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.treeViewIcons.Images.SetKeyName(0, "fileIcon.png");
-            this.treeViewIcons.Images.SetKeyName(1, "folderIcon.png");
-            this.treeViewIcons.Images.SetKeyName(2, "folderOpenIcon.png");
-            this.treeViewIcons.Images.SetKeyName(3, "joystick.png");
-            // 
             // extremeCheckBox
             // 
             this.extremeCheckBox.AutoSize = true;
@@ -483,15 +487,38 @@
             this.flagAsExecutableToolStripMenuItem.Text = "Flag as Executable";
             this.flagAsExecutableToolStripMenuItem.Click += new System.EventHandler(this.flagAsExecutableToolStripMenuItem_Click);
             // 
-            // label14
+            // treeView
             // 
-            this.label14.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(496, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(44, 13);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "Content";
+            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView.ImageIndex = 0;
+            this.treeView.ImageList = this.treeViewIcons;
+            this.treeView.Location = new System.Drawing.Point(417, 16);
+            this.treeView.Name = "treeView";
+            this.treeView.SelectedImageIndex = 0;
+            this.treeView.Size = new System.Drawing.Size(203, 141);
+            this.treeView.TabIndex = 7;
+            // 
+            // captureLogoButton
+            // 
+            this.captureLogoButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.captureLogoButton.Location = new System.Drawing.Point(66, 163);
+            this.captureLogoButton.Name = "captureLogoButton";
+            this.captureLogoButton.Size = new System.Drawing.Size(75, 23);
+            this.captureLogoButton.TabIndex = 9;
+            this.captureLogoButton.Text = "Capture";
+            this.captureLogoButton.UseVisualStyleBackColor = true;
+            this.captureLogoButton.Click += new System.EventHandler(this.captureLogoButton_Click);
+            // 
+            // captureScreenshotButton
+            // 
+            this.captureScreenshotButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.captureScreenshotButton.Location = new System.Drawing.Point(273, 163);
+            this.captureScreenshotButton.Name = "captureScreenshotButton";
+            this.captureScreenshotButton.Size = new System.Drawing.Size(75, 23);
+            this.captureScreenshotButton.TabIndex = 10;
+            this.captureScreenshotButton.Text = "Capture";
+            this.captureScreenshotButton.UseVisualStyleBackColor = true;
+            this.captureScreenshotButton.Click += new System.EventHandler(this.captureScreenshotButton_Click);
             // 
             // CurationForm
             // 
@@ -554,7 +581,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
-        private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.CheckBox extremeCheckBox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
@@ -564,5 +590,8 @@
         private System.Windows.Forms.ComboBox platformComboBox;
         private System.Windows.Forms.ComboBox statusComboBox;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TreeView treeView;
+        private System.Windows.Forms.Button captureLogoButton;
+        private System.Windows.Forms.Button captureScreenshotButton;
     }
 }
