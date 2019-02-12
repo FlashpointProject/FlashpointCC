@@ -22,6 +22,8 @@ namespace FlashpointCurator
     public partial class CurationForm : Form
     {
         private IContentSource source;
+        private ProfileEditorForm profileEditor;
+        private Curation curation;
         private TreeNode executable;
         private string flashpointPath;
 
@@ -29,6 +31,15 @@ namespace FlashpointCurator
         {
             this.flashpointPath = flashpointPath;
             InitializeComponent();
+            IsMdiContainer = true;
+            profileEditor = new ProfileEditorForm(flashpointPath)
+            {
+                MdiParent = this,
+                FormBorderStyle = FormBorderStyle.None
+            };
+            profileEditor.ProfileChange += ProfileEditor_ProfileChange;
+            panel3.Controls.Add(profileEditor);
+            profileEditor.Show();
             treeView.AllowDrop = true;
             treeView.DragEnter += TreeView_DragEnter;
             treeView.DragDrop += TreeView_DragDrop;
@@ -46,12 +57,36 @@ namespace FlashpointCurator
             playModeComboBox.SelectedIndex = 0;
             statusComboBox.Items.AddRange(Curation.Statuses);
             statusComboBox.SelectedIndex = 0;
-            platformComboBox.Items.AddRange(Platform.Platforms);
-            platformComboBox.SelectedIndex = 0;
             treeView.MouseDown += TreeView_MouseDown;
             treeView.AfterExpand += TreeView_AfterExpand;
             treeView.AfterCollapse += TreeView_AfterCollapse;
             Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+        }
+
+        private void ProfileEditor_ProfileChange(Profile profile)
+        {
+            if (curation == null) return;
+            var launchCommand = curation.LaunchCommand;
+            var pattern = Regex.Replace(Regex.Escape(profile.CommandLine), "%(content|dest)_path%", "(.*)", RegexOptions.IgnoreCase);
+            var match = Regex.Match(launchCommand, pattern);
+            if (match.Success)
+            {
+                var executablePath = new UriBuilder(match.Groups[1].Value).Uri.GetComponents(UriComponents.Host & UriComponents.Path, UriFormat.Unescaped);
+                executablePath = executablePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+                if (launchCommand.IndexOf("%dest_path%", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    executablePath = executablePath.Substring(profile.DestinationPath.Length - 1);
+                }
+
+                var executable = treeView.Nodes.All(Filter.EXCLUDE_PARENTS)
+                    .Where(n => executablePath.Equals(n.FullPath, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                if (executable != null)
+                {
+                    this.executable = executable;
+                    executable.ImageIndex = 3;
+                    executable.SelectedImageIndex = 3;
+                }
+            }
         }
 
         private void TreeView_AfterCollapse(object sender, TreeViewEventArgs e)
@@ -142,30 +177,10 @@ namespace FlashpointCurator
             playModeComboBox.SelectedIndex = Math.Max(0, playModeComboBox.FindString(curation.PlayMode));
             statusComboBox.SelectedIndex = Math.Max(0, statusComboBox.FindString(curation.Status));
             sourceTextBox.Text = curation.Source;
-            platformComboBox.SelectedIndex = Math.Max(0, platformComboBox.FindString(curation.PlayMode));
             publisherTextBox.Text = curation.Publisher;
-
-            Platform platform = (Platform)platformComboBox.SelectedItem;
-            var launchCommand = curation.LaunchCommand;
-            var pattern = Regex.Replace(Regex.Escape(platform.CommandLine), "%(content|dest)_path%", "(.*)", RegexOptions.IgnoreCase);
-            var match = Regex.Match(launchCommand, pattern);
-            if (match.Success)
-            {
-                var executablePath = match.Groups[1].Value.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
-                if (launchCommand.IndexOf("%dest_path%", StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    executablePath = executablePath.Substring(platform.DestinationPath.Length - 1);
-                }
-
-                var executable = treeView.Nodes.All(Filter.EXCLUDE_PARENTS)
-                    .Where(n => executablePath.Equals(n.FullPath, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-                if (executable != null)
-                {
-                    this.executable = executable;
-                    executable.ImageIndex = 3;
-                    executable.SelectedImageIndex = 3;
-                }
-            }
+            notesTextBox.Text = curation.Notes;
+            authorNotesTextBox.Text = curation.AuthorNotes;
+            this.curation = curation;
         }
 
         public static string GetLaunchCommand(string commandLine, TreeNode executable, string dest)
@@ -226,9 +241,9 @@ namespace FlashpointCurator
 
         private void saveFileDialog_FileOk(object sender, CancelEventArgs e)
         {
-            var platform = (Platform)platformComboBox.SelectedItem;
-            var dest = Path.Combine(flashpointPath, platform.DestinationPath);
-            var commandLine = GetLaunchCommand(platform.CommandLine, executable, dest);
+            var profile = profileEditor.CurrentProfile;
+            var dest = Path.Combine(flashpointPath, profile.DestinationPath);
+            var commandLine = GetLaunchCommand(profile.CommandLine, executable, dest);
             Curation curation = new Curation
             {
                 Title = titleTextBox.Text,
@@ -238,9 +253,11 @@ namespace FlashpointCurator
                 PlayMode = playModeComboBox.SelectedItem.ToString(),
                 Status = statusComboBox.SelectedItem.ToString(),
                 Source = sourceTextBox.Text,
-                Platform = platform.ToString(),
+                Platform = profileEditor.CurrentProfile.Platform,
                 Publisher = publisherTextBox.Text,
-                LaunchCommand = commandLine
+                LaunchCommand = commandLine,
+                Notes = notesTextBox.Text,
+                AuthorNotes = authorNotesTextBox.Text
             };
             if (dateTimePicker.Checked)
             {
@@ -303,19 +320,19 @@ namespace FlashpointCurator
                 MessageBox.Show("Please flag a file as an executable.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var platform = (Platform)platformComboBox.SelectedItem;
-            var dest = Path.Combine(flashpointPath, platform.DestinationPath);
-            var commandLine = GetLaunchCommand(platform.CommandLine, executable, dest);
+            var profile = profileEditor.CurrentProfile;
+            var dest = Path.Combine(flashpointPath, profile.DestinationPath);
+            var commandLine = GetLaunchCommand(profile.CommandLine, executable, dest);
             var now = DateTime.UtcNow;
             Game game = new Game
             {
-                ApplicationPath = platform.ApplicationPath,
+                ApplicationPath = profile.ApplicationPath,
                 CommandLine = commandLine,
                 DateAdded = now,
                 DateModified = now,
                 Developer = developerTextBox.Text,
                 Id = Guid.NewGuid(),
-                Platform = platform.Name,
+                Platform = profile.Platform,
                 Publisher = publisherTextBox.Text,
                 Source = sourceTextBox.Text,
                 Title = titleTextBox.Text,
@@ -325,7 +342,7 @@ namespace FlashpointCurator
                 Genre = genreComboBox.SelectedItem.ToString()
             };
             var platformRepo = Path.Combine(flashpointPath, "Data", "Platforms");
-            var dataFile = Path.Combine(platformRepo, platform.Name + ".xml");
+            var dataFile = Path.Combine(platformRepo, profile.Platform + ".xml");
 
             string xml;
             using (var ms = new MemoryStream())
@@ -348,7 +365,7 @@ namespace FlashpointCurator
                 File.WriteAllLines(dataFile, lines);
             }
             source.CopyTo(dest);
-            var platformImagesRepo = Path.Combine(flashpointPath, "Images", platform.Name);
+            var platformImagesRepo = Path.Combine(flashpointPath, "Images", profile.Platform);
             var logoPath = Path.Combine(platformImagesRepo, "Box - Front", titleTextBox.Text + "-01.png");
             var ssPath = Path.Combine(platformImagesRepo, "Screenshot - Gameplay", titleTextBox.Text + "-01.png");
             Directory.CreateDirectory(Path.GetDirectoryName(logoPath));

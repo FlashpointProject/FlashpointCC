@@ -49,7 +49,7 @@ namespace FlashpointCurator
         private static Dictionary<string, string> Parse(Stream stream)
         {
             string line;
-            var values = new Dictionary<string, string>();
+            var values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             using (var reader = new StreamReader(stream))
             {
                 while ((line = reader.ReadLine()) != null)

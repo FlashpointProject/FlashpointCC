@@ -62,5 +62,10 @@ namespace FlashpointCurator
 
         [MetaElement(ElementName = "Launch Command")]
         public string LaunchCommand { get; set; }
+
+        public string Notes { get; set; }
+
+        [MetaElement(ElementName = "Author Notes")]
+        public string AuthorNotes { get; set; }
     }
 }

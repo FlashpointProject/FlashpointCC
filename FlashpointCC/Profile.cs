@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace FlashpointCurator
 {
-    public class Platform
+    public class Profile
     {
-        public static Platform[] Platforms { get; set; }
-
         public string Name { get; set; }
+
+        public string Platform { get; set; }
 
         public string ApplicationPath { get; set; }
 
@@ -18,9 +14,11 @@ namespace FlashpointCurator
 
         public string CommandLine { get; set; }
 
-        public bool IsConfigured()
+        public bool Validate()
         {
-            return ApplicationPath != null && DestinationPath != null && CommandLine != null;
+            return !GetType().GetProperties()
+                .Select(p => (string)p.GetValue(this))
+                .Any(value => string.IsNullOrEmpty(value));
         }
 
         public override string ToString()

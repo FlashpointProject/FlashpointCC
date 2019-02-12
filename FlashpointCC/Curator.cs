@@ -95,7 +95,7 @@ namespace FlashpointCurator
 
         private void importCurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (CanCurate() && openCurationFileDialog.ShowDialog() == DialogResult.OK)
+            if (openCurationFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var logoStream = new MemoryStream();
                 var ssStream = new MemoryStream();
@@ -133,29 +133,12 @@ namespace FlashpointCurator
 
         private void newCurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (CanCurate())
-            {
-                new CurationForm(flashpointPath).ShowDialog();
-            }
+            new CurationForm(flashpointPath).ShowDialog();
         }
 
-        private void platformEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void profileEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new PlatformEditorForm().ShowDialog();
-        }
-
-        private bool CanCurate()
-        {
-            if (Platform.Platforms == null || Platform.Platforms.Length == 0)
-            {
-                var result = MessageBox.Show("You need to define at least one platform before curating.\nDo you want to open the Platform Editor?", "No platforms defined", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                if (result == DialogResult.Yes)
-                {
-                    new PlatformEditorForm().ShowDialog();
-                }
-                return false;
-            }
-            return true;
+            new ProfileEditorForm(flashpointPath).ShowDialog();
         }
     }
 }

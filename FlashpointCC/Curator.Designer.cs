@@ -45,7 +45,7 @@
             this.richTextBox = new System.Windows.Forms.RichTextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.openCurationFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.platformEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.profileEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -107,7 +107,7 @@
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.columnPrioritiesToolStripMenuItem,
-            this.platformEditorToolStripMenuItem,
+            this.profileEditorToolStripMenuItem,
             this.convertToMediaWikiToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
@@ -191,12 +191,12 @@
             this.openCurationFileDialog.DefaultExt = "zip";
             this.openCurationFileDialog.Filter = "ZIP Archives (*.zip)|*.zip";
             // 
-            // platformEditorToolStripMenuItem
+            // profileEditorToolStripMenuItem
             // 
-            this.platformEditorToolStripMenuItem.Name = "platformEditorToolStripMenuItem";
-            this.platformEditorToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.platformEditorToolStripMenuItem.Text = "Platform Editor";
-            this.platformEditorToolStripMenuItem.Click += new System.EventHandler(this.platformEditorToolStripMenuItem_Click);
+            this.profileEditorToolStripMenuItem.Name = "profileEditorToolStripMenuItem";
+            this.profileEditorToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.profileEditorToolStripMenuItem.Text = "Profile Editor";
+            this.profileEditorToolStripMenuItem.Click += new System.EventHandler(this.profileEditorToolStripMenuItem_Click);
             // 
             // Curator
             // 
@@ -238,7 +238,7 @@
         private System.Windows.Forms.ToolStripMenuItem importCurationToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openCurationFileDialog;
         private System.Windows.Forms.ToolStripMenuItem newCurationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem platformEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem profileEditorToolStripMenuItem;
     }
 }
 

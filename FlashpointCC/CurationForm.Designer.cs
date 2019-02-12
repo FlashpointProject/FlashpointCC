@@ -30,9 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CurationForm));
+            this.treeViewIcons = new System.Windows.Forms.ImageList(this.components);
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.flagAsExecutableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.statusComboBox = new System.Windows.Forms.ComboBox();
-            this.platformComboBox = new System.Windows.Forms.ComboBox();
             this.publisherTextBox = new System.Windows.Forms.TextBox();
             this.sourceTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,7 +49,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.titleTextBox = new System.Windows.Forms.TextBox();
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -51,33 +56,117 @@
             this.genreComboBox = new System.Windows.Forms.ComboBox();
             this.seriesTextBox = new System.Windows.Forms.TextBox();
             this.playModeComboBox = new System.Windows.Forms.ComboBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.logoPictureBox = new System.Windows.Forms.PictureBox();
-            this.screenshotPictureBox = new System.Windows.Forms.PictureBox();
             this.curateButton = new System.Windows.Forms.Button();
             this.saveCurationButton = new System.Windows.Forms.Button();
+            this.extremeCheckBox = new System.Windows.Forms.CheckBox();
             this.imagePanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label11 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.treeView = new System.Windows.Forms.TreeView();
+            this.logoPictureBox = new System.Windows.Forms.PictureBox();
+            this.screenshotPictureBox = new System.Windows.Forms.PictureBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.treeView = new System.Windows.Forms.TreeView();
-            this.treeViewIcons = new System.Windows.Forms.ImageList(this.components);
-            this.extremeCheckBox = new System.Windows.Forms.CheckBox();
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.flagAsExecutableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.notesTextBox = new System.Windows.Forms.RichTextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.authorNotesTextBox = new System.Windows.Forms.RichTextBox();
+            this.contextMenuStrip.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.screenshotPictureBox)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.imagePanel.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.contextMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.screenshotPictureBox)).BeginInit();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // treeViewIcons
+            // 
+            this.treeViewIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("treeViewIcons.ImageStream")));
+            this.treeViewIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.treeViewIcons.Images.SetKeyName(0, "fileIcon.png");
+            this.treeViewIcons.Images.SetKeyName(1, "folderIcon.png");
+            this.treeViewIcons.Images.SetKeyName(2, "folderOpenIcon.png");
+            this.treeViewIcons.Images.SetKeyName(3, "joystick.png");
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "zip";
+            this.saveFileDialog.Filter = "ZIP Archives (*.zip)|*.zip";
+            this.saveFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog_FileOk);
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.flagAsExecutableToolStripMenuItem});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(170, 26);
+            // 
+            // flagAsExecutableToolStripMenuItem
+            // 
+            this.flagAsExecutableToolStripMenuItem.Name = "flagAsExecutableToolStripMenuItem";
+            this.flagAsExecutableToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.flagAsExecutableToolStripMenuItem.Text = "Flag as Executable";
+            this.flagAsExecutableToolStripMenuItem.Click += new System.EventHandler(this.flagAsExecutableToolStripMenuItem_Click);
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.AutoSize = true;
+            this.tableLayoutPanel4.ColumnCount = 2;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 1, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 491F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(916, 491);
+            this.tableLayoutPanel4.TabIndex = 9;
+            // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.curateButton);
+            this.panel1.Controls.Add(this.saveCurationButton);
+            this.panel1.Controls.Add(this.extremeCheckBox);
+            this.panel1.Controls.Add(this.imagePanel);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(635, 485);
+            this.panel1.TabIndex = 10;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(629, 220);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Details";
             // 
             // tableLayoutPanel1
             // 
@@ -88,8 +177,6 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.statusComboBox, 4, 1);
-            this.tableLayoutPanel1.Controls.Add(this.platformComboBox, 4, 3);
-            this.tableLayoutPanel1.Controls.Add(this.publisherTextBox, 4, 4);
             this.tableLayoutPanel1.Controls.Add(this.sourceTextBox, 4, 2);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 1);
@@ -99,14 +186,14 @@
             this.tableLayoutPanel1.Controls.Add(this.label6, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.label7, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.label8, 3, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label9, 3, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 3, 4);
             this.tableLayoutPanel1.Controls.Add(this.titleTextBox, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.dateTimePicker, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.developerTextBox, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.genreComboBox, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.seriesTextBox, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.playModeComboBox, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 3, 3);
+            this.tableLayoutPanel1.Controls.Add(this.publisherTextBox, 4, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -128,19 +215,10 @@
             this.statusComboBox.Size = new System.Drawing.Size(200, 21);
             this.statusComboBox.TabIndex = 28;
             // 
-            // platformComboBox
-            // 
-            this.platformComboBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.platformComboBox.FormattingEnabled = true;
-            this.platformComboBox.Location = new System.Drawing.Point(381, 129);
-            this.platformComboBox.Name = "platformComboBox";
-            this.platformComboBox.Size = new System.Drawing.Size(200, 21);
-            this.platformComboBox.TabIndex = 27;
-            // 
             // publisherTextBox
             // 
             this.publisherTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.publisherTextBox.Location = new System.Drawing.Point(381, 170);
+            this.publisherTextBox.Location = new System.Drawing.Point(381, 130);
             this.publisherTextBox.Name = "publisherTextBox";
             this.publisherTextBox.Size = new System.Drawing.Size(200, 20);
             this.publisherTextBox.TabIndex = 25;
@@ -233,21 +311,11 @@
             this.label8.TabIndex = 13;
             this.label8.Text = "Source:";
             // 
-            // label9
-            // 
-            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(315, 133);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(48, 13);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "Platform:";
-            // 
             // label10
             // 
             this.label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(315, 174);
+            this.label10.Location = new System.Drawing.Point(315, 133);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 13);
             this.label10.TabIndex = 15;
@@ -308,39 +376,9 @@
             this.playModeComboBox.Size = new System.Drawing.Size(200, 21);
             this.playModeComboBox.TabIndex = 26;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.tableLayoutPanel1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(629, 220);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Details";
-            // 
-            // logoPictureBox
-            // 
-            this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.logoPictureBox.Location = new System.Drawing.Point(3, 16);
-            this.logoPictureBox.Name = "logoPictureBox";
-            this.logoPictureBox.Size = new System.Drawing.Size(201, 165);
-            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.logoPictureBox.TabIndex = 2;
-            this.logoPictureBox.TabStop = false;
-            // 
-            // screenshotPictureBox
-            // 
-            this.screenshotPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.screenshotPictureBox.Location = new System.Drawing.Point(210, 16);
-            this.screenshotPictureBox.Name = "screenshotPictureBox";
-            this.screenshotPictureBox.Size = new System.Drawing.Size(201, 165);
-            this.screenshotPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.screenshotPictureBox.TabIndex = 3;
-            this.screenshotPictureBox.TabStop = false;
-            // 
             // curateButton
             // 
-            this.curateButton.Location = new System.Drawing.Point(12, 466);
+            this.curateButton.Location = new System.Drawing.Point(3, 457);
             this.curateButton.Name = "curateButton";
             this.curateButton.Size = new System.Drawing.Size(120, 23);
             this.curateButton.TabIndex = 4;
@@ -351,7 +389,7 @@
             // saveCurationButton
             // 
             this.saveCurationButton.Enabled = false;
-            this.saveCurationButton.Location = new System.Drawing.Point(138, 466);
+            this.saveCurationButton.Location = new System.Drawing.Point(129, 457);
             this.saveCurationButton.Name = "saveCurationButton";
             this.saveCurationButton.Size = new System.Drawing.Size(120, 23);
             this.saveCurationButton.TabIndex = 5;
@@ -359,10 +397,20 @@
             this.saveCurationButton.UseVisualStyleBackColor = true;
             this.saveCurationButton.Click += new System.EventHandler(this.saveCurationButton_Click);
             // 
+            // extremeCheckBox
+            // 
+            this.extremeCheckBox.AutoSize = true;
+            this.extremeCheckBox.Location = new System.Drawing.Point(568, 461);
+            this.extremeCheckBox.Name = "extremeCheckBox";
+            this.extremeCheckBox.Size = new System.Drawing.Size(64, 17);
+            this.extremeCheckBox.TabIndex = 8;
+            this.extremeCheckBox.Text = "Extreme";
+            this.extremeCheckBox.UseVisualStyleBackColor = true;
+            // 
             // imagePanel
             // 
             this.imagePanel.Controls.Add(this.tableLayoutPanel3);
-            this.imagePanel.Location = new System.Drawing.Point(12, 235);
+            this.imagePanel.Location = new System.Drawing.Point(3, 226);
             this.imagePanel.Name = "imagePanel";
             this.imagePanel.Size = new System.Drawing.Size(629, 203);
             this.imagePanel.TabIndex = 6;
@@ -413,6 +461,47 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(623, 184);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
+            // label14
+            // 
+            this.label14.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(496, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(44, 13);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "Content";
+            // 
+            // treeView
+            // 
+            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView.ImageIndex = 0;
+            this.treeView.ImageList = this.treeViewIcons;
+            this.treeView.Location = new System.Drawing.Point(417, 16);
+            this.treeView.Name = "treeView";
+            this.treeView.SelectedImageIndex = 0;
+            this.treeView.Size = new System.Drawing.Size(203, 165);
+            this.treeView.TabIndex = 7;
+            // 
+            // logoPictureBox
+            // 
+            this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.logoPictureBox.Location = new System.Drawing.Point(3, 16);
+            this.logoPictureBox.Name = "logoPictureBox";
+            this.logoPictureBox.Size = new System.Drawing.Size(201, 165);
+            this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.logoPictureBox.TabIndex = 2;
+            this.logoPictureBox.TabStop = false;
+            // 
+            // screenshotPictureBox
+            // 
+            this.screenshotPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.screenshotPictureBox.Location = new System.Drawing.Point(210, 16);
+            this.screenshotPictureBox.Name = "screenshotPictureBox";
+            this.screenshotPictureBox.Size = new System.Drawing.Size(201, 165);
+            this.screenshotPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.screenshotPictureBox.TabIndex = 3;
+            this.screenshotPictureBox.TabStop = false;
+            // 
             // label12
             // 
             this.label12.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -433,99 +522,167 @@
             this.label13.TabIndex = 5;
             this.label13.Text = "Screenshot";
             // 
-            // saveFileDialog
+            // tableLayoutPanel5
             // 
-            this.saveFileDialog.DefaultExt = "zip";
-            this.saveFileDialog.Filter = "ZIP Archives (*.zip)|*.zip";
-            this.saveFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog_FileOk);
+            this.tableLayoutPanel5.AutoSize = true;
+            this.tableLayoutPanel5.ColumnCount = 1;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Controls.Add(this.groupBox2, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.groupBox3, 0, 1);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(644, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 0F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(269, 485);
+            this.tableLayoutPanel5.TabIndex = 9;
             // 
-            // treeView
+            // groupBox2
             // 
-            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView.ImageIndex = 0;
-            this.treeView.ImageList = this.treeViewIcons;
-            this.treeView.Location = new System.Drawing.Point(417, 16);
-            this.treeView.Name = "treeView";
-            this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(203, 165);
-            this.treeView.TabIndex = 7;
+            this.groupBox2.AutoSize = true;
+            this.groupBox2.Controls.Add(this.panel3);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(3, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(263, 19);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Profile";
             // 
-            // treeViewIcons
+            // panel3
             // 
-            this.treeViewIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("treeViewIcons.ImageStream")));
-            this.treeViewIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.treeViewIcons.Images.SetKeyName(0, "fileIcon.png");
-            this.treeViewIcons.Images.SetKeyName(1, "folderIcon.png");
-            this.treeViewIcons.Images.SetKeyName(2, "folderOpenIcon.png");
-            this.treeViewIcons.Images.SetKeyName(3, "joystick.png");
+            this.panel3.AutoSize = true;
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 16);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(257, 0);
+            this.panel3.TabIndex = 0;
             // 
-            // extremeCheckBox
+            // groupBox3
             // 
-            this.extremeCheckBox.AutoSize = true;
-            this.extremeCheckBox.Location = new System.Drawing.Point(577, 470);
-            this.extremeCheckBox.Name = "extremeCheckBox";
-            this.extremeCheckBox.Size = new System.Drawing.Size(64, 17);
-            this.extremeCheckBox.TabIndex = 8;
-            this.extremeCheckBox.Text = "Extreme";
-            this.extremeCheckBox.UseVisualStyleBackColor = true;
+            this.groupBox3.Controls.Add(this.panel2);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(3, 28);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(263, 454);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Information";
             // 
-            // contextMenuStrip
+            // panel2
             // 
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.flagAsExecutableToolStripMenuItem});
-            this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(170, 26);
+            this.panel2.AutoSize = true;
+            this.panel2.Controls.Add(this.tabControl1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 16);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(257, 435);
+            this.panel2.TabIndex = 0;
             // 
-            // flagAsExecutableToolStripMenuItem
+            // tabControl1
             // 
-            this.flagAsExecutableToolStripMenuItem.Name = "flagAsExecutableToolStripMenuItem";
-            this.flagAsExecutableToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.flagAsExecutableToolStripMenuItem.Text = "Flag as Executable";
-            this.flagAsExecutableToolStripMenuItem.Click += new System.EventHandler(this.flagAsExecutableToolStripMenuItem_Click);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(257, 435);
+            this.tabControl1.TabIndex = 0;
             // 
-            // label14
+            // tabPage1
             // 
-            this.label14.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(496, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(44, 13);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "Content";
+            this.tabPage1.Controls.Add(this.notesTextBox);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(249, 409);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Notes";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // notesTextBox
+            // 
+            this.notesTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.notesTextBox.Location = new System.Drawing.Point(3, 3);
+            this.notesTextBox.Name = "notesTextBox";
+            this.notesTextBox.Size = new System.Drawing.Size(243, 403);
+            this.notesTextBox.TabIndex = 0;
+            this.notesTextBox.Text = "";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.authorNotesTextBox);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(249, 409);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Author Notes";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // authorNotesTextBox
+            // 
+            this.authorNotesTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.authorNotesTextBox.Location = new System.Drawing.Point(3, 3);
+            this.authorNotesTextBox.Name = "authorNotesTextBox";
+            this.authorNotesTextBox.Size = new System.Drawing.Size(243, 403);
+            this.authorNotesTextBox.TabIndex = 0;
+            this.authorNotesTextBox.Text = "";
             // 
             // CurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 501);
-            this.Controls.Add(this.extremeCheckBox);
-            this.Controls.Add(this.imagePanel);
-            this.Controls.Add(this.saveCurationButton);
-            this.Controls.Add(this.curateButton);
-            this.Controls.Add(this.groupBox1);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(916, 491);
+            this.Controls.Add(this.tableLayoutPanel4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "CurationForm";
             this.Text = "CurationForm";
+            this.contextMenuStrip.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.screenshotPictureBox)).EndInit();
             this.imagePanel.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.contextMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.screenshotPictureBox)).EndInit();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.ImageList treeViewIcons;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem flagAsExecutableToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.ComboBox statusComboBox;
+        private System.Windows.Forms.TextBox publisherTextBox;
         private System.Windows.Forms.TextBox sourceTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
@@ -535,34 +692,35 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox titleTextBox;
         private System.Windows.Forms.DateTimePicker dateTimePicker;
         private System.Windows.Forms.TextBox developerTextBox;
         private System.Windows.Forms.ComboBox genreComboBox;
         private System.Windows.Forms.TextBox seriesTextBox;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox publisherTextBox;
-        private System.Windows.Forms.PictureBox logoPictureBox;
         private System.Windows.Forms.ComboBox playModeComboBox;
-        private System.Windows.Forms.PictureBox screenshotPictureBox;
         private System.Windows.Forms.Button curateButton;
         private System.Windows.Forms.Button saveCurationButton;
+        private System.Windows.Forms.CheckBox extremeCheckBox;
         private System.Windows.Forms.Panel imagePanel;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TreeView treeView;
-        private System.Windows.Forms.CheckBox extremeCheckBox;
+        private System.Windows.Forms.PictureBox logoPictureBox;
+        private System.Windows.Forms.PictureBox screenshotPictureBox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ImageList treeViewIcons;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem flagAsExecutableToolStripMenuItem;
-        private System.Windows.Forms.ComboBox platformComboBox;
-        private System.Windows.Forms.ComboBox statusComboBox;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.RichTextBox notesTextBox;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.RichTextBox authorNotesTextBox;
     }
 }

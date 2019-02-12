@@ -17,10 +17,6 @@ namespace FlashpointCurator
         static void Main()
         {
             Curation.Genres = JsonConvert.DeserializeObject<string[]>(File.ReadAllText("genres.json"));
-            if (File.Exists("platforms.json"))
-            {
-                Platform.Platforms = JsonConvert.DeserializeObject<Platform[]>(File.ReadAllText("platforms.json"));
-            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Curator());

@@ -68,6 +68,13 @@
     <Compile Include="Content\ContentSource.cs" />
     <Compile Include="Content\IContentSource.cs" />
     <Compile Include="Content\ZipContentSource.cs" />
+    <Compile Include="Profile.cs" />
+    <Compile Include="ProfileEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfileEditorForm.Designer.cs">
+      <DependentUpon>ProfileEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\TreeNodeCollectionUtil.cs" />
     <Compile Include="Utils\ZipFileUtil.cs" />
     <Compile Include="Curation.cs" />
@@ -85,13 +92,6 @@
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="MetaParser.cs" />
-    <Compile Include="Platform.cs" />
-    <Compile Include="PlatformEditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PlatformEditorForm.Designer.cs">
-      <DependentUpon>PlatformEditorForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\PathUtil.cs" />
@@ -104,8 +104,8 @@
     <EmbeddedResource Include="Curator.resx">
       <DependentUpon>Curator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PlatformEditorForm.resx">
-      <DependentUpon>PlatformEditorForm.cs</DependentUpon>
+    <EmbeddedResource Include="ProfileEditorForm.resx">
+      <DependentUpon>ProfileEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

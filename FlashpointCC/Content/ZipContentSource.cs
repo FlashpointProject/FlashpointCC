@@ -32,7 +32,7 @@ namespace FlashpointCurator.Content
             {
                 entries =
                     (from entry in zip.Entries
-                     let match = Regex.Match(entry.FullName, @"(?i)(.*\/)?content\/(.*)")
+                     let match = Regex.Match(entry.FullName, @"(?i)(.*?)/?content\/(.*)")
                      where match.Success
                      select match).ToDictionary(x => x.Value, x => x.Groups[2].Value);
             }
