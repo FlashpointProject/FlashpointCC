@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -22,24 +23,14 @@ namespace FlashpointCurator
     public partial class CurationForm : Form
     {
         private IContentSource source;
-        private ProfileEditorForm profileEditor;
         private Curation curation;
         private TreeNode executable;
         private string flashpointPath;
 
-        public CurationForm(string flashpointPath)
+        public CurationForm()
         {
-            this.flashpointPath = flashpointPath;
+            flashpointPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             InitializeComponent();
-            IsMdiContainer = true;
-            profileEditor = new ProfileEditorForm(flashpointPath)
-            {
-                MdiParent = this,
-                FormBorderStyle = FormBorderStyle.None
-            };
-            profileEditor.ProfileChange += ProfileEditor_ProfileChange;
-            panel3.Controls.Add(profileEditor);
-            profileEditor.Show();
             treeView.AllowDrop = true;
             treeView.DragEnter += TreeView_DragEnter;
             treeView.DragDrop += TreeView_DragDrop;
@@ -51,6 +42,7 @@ namespace FlashpointCurator
             screenshotPictureBox.DragEnter += ScreenshotPictureBox_DragEnter;
             screenshotPictureBox.AllowDrop = true;
             screenshotPictureBox.DragDrop += ScreenshotPictureBox_DragDrop;
+            profileComboBox.Items.AddRange(ProfileEditorForm.LoadProfiles());
             genreComboBox.Items.AddRange(Curation.Genres);
             genreComboBox.SelectedIndex = 0;
             playModeComboBox.Items.AddRange(Curation.Modes);
@@ -221,6 +213,11 @@ namespace FlashpointCurator
 
         private void saveCurationButton_Click(object sender, EventArgs e)
         {
+            if (profileComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a profile before saving the curation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (source == null)
             {
                 MessageBox.Show("Please add game content before saving the curation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -241,7 +238,7 @@ namespace FlashpointCurator
 
         private void saveFileDialog_FileOk(object sender, CancelEventArgs e)
         {
-            var profile = profileEditor.CurrentProfile;
+            var profile = (Profile)profileComboBox.SelectedItem;
             var dest = Path.Combine(flashpointPath, profile.DestinationPath);
             var commandLine = GetLaunchCommand(profile.CommandLine, executable, dest);
             Curation curation = new Curation
@@ -253,7 +250,7 @@ namespace FlashpointCurator
                 PlayMode = playModeComboBox.SelectedItem.ToString(),
                 Status = statusComboBox.SelectedItem.ToString(),
                 Source = sourceTextBox.Text,
-                Platform = profileEditor.CurrentProfile.Platform,
+                Platform = profile.Platform,
                 Publisher = publisherTextBox.Text,
                 LaunchCommand = commandLine,
                 Notes = notesTextBox.Text,
@@ -313,14 +310,61 @@ namespace FlashpointCurator
             node.SelectedImageIndex = 3;
         }
 
-        private void curateButton_Click(object sender, EventArgs e)
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            new CurationForm().Show();
+            Dispose(false);
+        }
+
+        private void importCurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openCurationFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var logoStream = new MemoryStream();
+                var ssStream = new MemoryStream();
+                var metaStream = new MemoryStream();
+                using (var zip = ZipFile.OpenRead(openCurationFileDialog.FileName))
+                {
+                    ZipArchiveEntry logoEntry, ssEntry, metaEntry;
+                    if (!zip.TryFind("logo.png", out logoEntry))
+                    {
+                        MessageBox.Show("Cannot import curation. Missing logo.png.", "Invalid curation.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (!zip.TryFind("ss.png", out ssEntry))
+                    {
+                        MessageBox.Show("Cannot import curation. Missing ss.png.", "Invalid curation.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (!zip.TryFind("meta.txt", out metaEntry))
+                    {
+                        MessageBox.Show("Cannot import curation. Missing meta.txt.", "Invalid curation.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    logoEntry.Open().CopyTo(logoStream);
+                    ssEntry.Open().CopyTo(ssStream);
+                    metaEntry.Open().CopyTo(metaStream);
+                }
+                SetLogo(Image.FromStream(logoStream));
+                SetScreenshot(Image.FromStream(ssStream));
+                SetContent(ZipContentSource.FromPath(openCurationFileDialog.FileName));
+                LoadCuration(MetaParser.Deserialize<Curation>(metaStream));
+            }
+        }
+
+        private void addToFlashpointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (profileComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a profile before saving the curation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (executable == null)
             {
                 MessageBox.Show("Please flag a file as an executable.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var profile = profileEditor.CurrentProfile;
+            var profile = (Profile)profileComboBox.SelectedItem;
             var dest = Path.Combine(flashpointPath, profile.DestinationPath);
             var commandLine = GetLaunchCommand(profile.CommandLine, executable, dest);
             var now = DateTime.UtcNow;
@@ -373,6 +417,29 @@ namespace FlashpointCurator
             logoPictureBox.Image.Save(logoPath, ImageFormat.Png);
             screenshotPictureBox.Image.Save(ssPath, ImageFormat.Png);
             MessageBox.Show("Added to Flashpoint!", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void selectFlashpointPathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                flashpointPath = folderBrowserDialog.SelectedPath;
+            }
+        }
+
+        private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ProfileEditorForm(flashpointPath).ShowDialog();
+
+            // Reload profiles
+            profileComboBox.Items.Clear();
+            profileComboBox.Items.AddRange(ProfileEditorForm.LoadProfiles());
+
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

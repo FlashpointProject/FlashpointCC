@@ -48,11 +48,7 @@ namespace FlashpointCurator
         {
             this.flashpointPath = flashpointPath;
             InitializeComponent();
-            if (File.Exists("profiles.json"))
-            {
-                var profiles = JsonConvert.DeserializeObject<Profile[]>(File.ReadAllText("profiles.json"));
-                profileComboBox.Items.AddRange(profiles);
-            }
+
             LoadPlatforms();
             saveButton.Click += (sender, e) => { LoadPlatforms(); };
             helpBox.Image = SystemIcons.Question.ToBitmap();
@@ -97,6 +93,16 @@ namespace FlashpointCurator
             }
             var profiles = profileComboBox.Items.Cast<Profile>().ToArray();
             File.WriteAllText("profiles.json", JsonConvert.SerializeObject(profiles));
+        }
+
+        public static Profile[] LoadProfiles()
+        {
+            var profiles = new List<Profile>();
+            if (File.Exists("profiles.json"))
+            {
+                profiles.AddRange(JsonConvert.DeserializeObject<Profile[]>(File.ReadAllText("profiles.json")));
+            }
+            return profiles.ToArray();
         }
 
         private void profileComboBox_SelectedIndexChanged(object sender, EventArgs e)

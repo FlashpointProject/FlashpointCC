@@ -36,7 +36,7 @@
             this.flagAsExecutableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.profileComboBox = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.genreComboBox = new System.Windows.Forms.ComboBox();
             this.playModeComboBox = new System.Windows.Forms.ComboBox();
@@ -64,7 +64,6 @@
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.treeView = new System.Windows.Forms.TreeView();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -80,6 +79,9 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openCurationFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.selectFlashpointPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -90,7 +92,6 @@
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -143,7 +144,7 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.comboBox1, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.profileComboBox, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.titleTextBox, 1, 0);
@@ -174,15 +175,14 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(472, 238);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // comboBox1
+            // profileComboBox
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(84, 55);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(385, 21);
-            this.comboBox1.TabIndex = 11;
-            this.comboBox1.Text = "Profile";
+            this.profileComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.profileComboBox.FormattingEnabled = true;
+            this.profileComboBox.Location = new System.Drawing.Point(84, 55);
+            this.profileComboBox.Name = "profileComboBox";
+            this.profileComboBox.Size = new System.Drawing.Size(385, 21);
+            this.profileComboBox.TabIndex = 11;
             // 
             // tableLayoutPanel3
             // 
@@ -445,16 +445,18 @@
             // 
             // tableLayoutPanel8
             // 
+            this.tableLayoutPanel8.AutoSize = true;
             this.tableLayoutPanel8.ColumnCount = 2;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel8.Controls.Add(this.groupBox2, 1, 0);
-            this.tableLayoutPanel8.Controls.Add(this.groupBox3, 0, 0);
+            this.tableLayoutPanel8.Controls.Add(this.panel2, 0, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 445);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 1;
+            this.tableLayoutPanel8.RowCount = 2;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel8.Size = new System.Drawing.Size(478, 173);
             this.tableLayoutPanel8.TabIndex = 7;
             // 
@@ -464,7 +466,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(242, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(233, 167);
+            this.groupBox2.Size = new System.Drawing.Size(233, 147);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Content";
@@ -477,28 +479,16 @@
             this.treeView.Location = new System.Drawing.Point(3, 16);
             this.treeView.Name = "treeView";
             this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(227, 148);
+            this.treeView.Size = new System.Drawing.Size(227, 128);
             this.treeView.TabIndex = 7;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.panel2);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(3, 3);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(233, 167);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Information";
             // 
             // panel2
             // 
-            this.panel2.AutoSize = true;
             this.panel2.Controls.Add(this.tabControl1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 16);
+            this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(227, 148);
+            this.panel2.Size = new System.Drawing.Size(233, 147);
             this.panel2.TabIndex = 0;
             // 
             // tabControl1
@@ -509,7 +499,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(227, 148);
+            this.tabControl1.Size = new System.Drawing.Size(233, 147);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -518,7 +508,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(219, 122);
+            this.tabPage1.Size = new System.Drawing.Size(225, 121);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Notes";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -528,7 +518,7 @@
             this.notesTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.notesTextBox.Location = new System.Drawing.Point(3, 3);
             this.notesTextBox.Name = "notesTextBox";
-            this.notesTextBox.Size = new System.Drawing.Size(213, 116);
+            this.notesTextBox.Size = new System.Drawing.Size(219, 115);
             this.notesTextBox.TabIndex = 0;
             this.notesTextBox.Text = "";
             // 
@@ -538,7 +528,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(219, 119);
+            this.tabPage2.Size = new System.Drawing.Size(225, 121);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Author Notes";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -548,7 +538,7 @@
             this.authorNotesTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.authorNotesTextBox.Location = new System.Drawing.Point(3, 3);
             this.authorNotesTextBox.Name = "authorNotesTextBox";
-            this.authorNotesTextBox.Size = new System.Drawing.Size(213, 113);
+            this.authorNotesTextBox.Size = new System.Drawing.Size(219, 115);
             this.authorNotesTextBox.TabIndex = 0;
             this.authorNotesTextBox.Text = "";
             // 
@@ -579,6 +569,7 @@
             this.newToolStripMenuItem,
             this.importCurationToolStripMenuItem,
             this.addToFlashpointToolStripMenuItem,
+            this.selectFlashpointPathToolStripMenuItem,
             this.toolStripSeparator1,
             this.preferencesToolStripMenuItem,
             this.exitToolStripMenuItem});
@@ -592,6 +583,7 @@
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.newToolStripMenuItem.Text = "&New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // importCurationToolStripMenuItem
             // 
@@ -604,7 +596,7 @@
             // addToFlashpointToolStripMenuItem
             // 
             this.addToFlashpointToolStripMenuItem.Name = "addToFlashpointToolStripMenuItem";
-            this.addToFlashpointToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.addToFlashpointToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.addToFlashpointToolStripMenuItem.Text = "&Add to Flashpoint";
             this.addToFlashpointToolStripMenuItem.Visible = false;
             this.addToFlashpointToolStripMenuItem.Click += new System.EventHandler(this.addToFlashpointToolStripMenuItem_Click);
@@ -612,7 +604,7 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(165, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
             // 
             // preferencesToolStripMenuItem
             // 
@@ -629,6 +621,18 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // openCurationFileDialog
+            // 
+            this.openCurationFileDialog.DefaultExt = "zip";
+            this.openCurationFileDialog.Filter = "ZIP Archives (*.zip)|*.zip";
+            // 
+            // selectFlashpointPathToolStripMenuItem
+            // 
+            this.selectFlashpointPathToolStripMenuItem.Name = "selectFlashpointPathToolStripMenuItem";
+            this.selectFlashpointPathToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.selectFlashpointPathToolStripMenuItem.Text = "Select Flashpoint Path...";
+            this.selectFlashpointPathToolStripMenuItem.Click += new System.EventHandler(this.selectFlashpointPathToolStripMenuItem_Click);
             // 
             // CurationForm
             // 
@@ -653,10 +657,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.screenshotPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.tableLayoutPanel8.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -699,7 +702,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
@@ -715,9 +717,12 @@
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox profileComboBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.Button saveCurationButton;
+        private System.Windows.Forms.OpenFileDialog openCurationFileDialog;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.ToolStripMenuItem selectFlashpointPathToolStripMenuItem;
     }
 }

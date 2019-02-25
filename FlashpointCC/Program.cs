@@ -19,7 +19,7 @@ namespace FlashpointCurator
             Curation.Genres = JsonConvert.DeserializeObject<string[]>(File.ReadAllText("genres.json"));
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Curator());
+            Application.Run(new CurationForm());
         }
     }
 }
