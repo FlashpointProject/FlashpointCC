@@ -76,12 +76,12 @@
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importCurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToFlashpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectFlashpointPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openCurationFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.selectFlashpointPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -208,7 +208,9 @@
             // 
             this.genreComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.genreComboBox.FormattingEnabled = true;
+            this.genreComboBox.IntegralHeight = false;
             this.genreComboBox.Location = new System.Drawing.Point(3, 3);
+            this.genreComboBox.MaxDropDownItems = 17;
             this.genreComboBox.Name = "genreComboBox";
             this.genreComboBox.Size = new System.Drawing.Size(189, 21);
             this.genreComboBox.TabIndex = 19;
@@ -581,7 +583,7 @@
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -589,43 +591,17 @@
             // 
             this.importCurationToolStripMenuItem.Name = "importCurationToolStripMenuItem";
             this.importCurationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.importCurationToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.importCurationToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.importCurationToolStripMenuItem.Text = "&Import Curation";
             this.importCurationToolStripMenuItem.Click += new System.EventHandler(this.importCurationToolStripMenuItem_Click);
             // 
             // addToFlashpointToolStripMenuItem
             // 
             this.addToFlashpointToolStripMenuItem.Name = "addToFlashpointToolStripMenuItem";
-            this.addToFlashpointToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.addToFlashpointToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.addToFlashpointToolStripMenuItem.Text = "&Add to Flashpoint";
             this.addToFlashpointToolStripMenuItem.Visible = false;
             this.addToFlashpointToolStripMenuItem.Click += new System.EventHandler(this.addToFlashpointToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
-            // 
-            // preferencesToolStripMenuItem
-            // 
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.preferencesToolStripMenuItem.Text = "&Preferences";
-            this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // openCurationFileDialog
-            // 
-            this.openCurationFileDialog.DefaultExt = "zip";
-            this.openCurationFileDialog.Filter = "ZIP Archives (*.zip)|*.zip";
             // 
             // selectFlashpointPathToolStripMenuItem
             // 
@@ -633,6 +609,32 @@
             this.selectFlashpointPathToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
             this.selectFlashpointPathToolStripMenuItem.Text = "Select Flashpoint Path...";
             this.selectFlashpointPathToolStripMenuItem.Click += new System.EventHandler(this.selectFlashpointPathToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(196, 6);
+            // 
+            // preferencesToolStripMenuItem
+            // 
+            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+            this.preferencesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.preferencesToolStripMenuItem.Text = "&Preferences";
+            this.preferencesToolStripMenuItem.Click += new System.EventHandler(this.preferencesToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // openCurationFileDialog
+            // 
+            this.openCurationFileDialog.DefaultExt = "zip";
+            this.openCurationFileDialog.Filter = "ZIP Archives (*.zip)|*.zip";
             // 
             // CurationForm
             // 
@@ -647,6 +649,7 @@
             this.MaximizeBox = false;
             this.Name = "CurationForm";
             this.Text = "FlashpointCC";
+            this.Move += new System.EventHandler(this.CurationForm_Move);
             this.contextMenuStrip.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -690,7 +693,6 @@
         private System.Windows.Forms.TextBox titleTextBox;
         private System.Windows.Forms.DateTimePicker dateTimePicker;
         private System.Windows.Forms.TextBox developerTextBox;
-        private System.Windows.Forms.ComboBox genreComboBox;
         private System.Windows.Forms.TextBox seriesTextBox;
         private System.Windows.Forms.ComboBox playModeComboBox;
         private System.Windows.Forms.CheckBox extremeCheckBox;
@@ -724,5 +726,6 @@
         private System.Windows.Forms.OpenFileDialog openCurationFileDialog;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.ToolStripMenuItem selectFlashpointPathToolStripMenuItem;
+        private System.Windows.Forms.ComboBox genreComboBox;
     }
 }
