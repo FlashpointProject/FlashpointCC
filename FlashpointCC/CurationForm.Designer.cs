@@ -208,7 +208,9 @@
             // 
             this.genreComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.genreComboBox.FormattingEnabled = true;
+            this.genreComboBox.IntegralHeight = false;
             this.genreComboBox.Location = new System.Drawing.Point(3, 3);
+            this.genreComboBox.MaxDropDownItems = 17;
             this.genreComboBox.Name = "genreComboBox";
             this.genreComboBox.Size = new System.Drawing.Size(189, 21);
             this.genreComboBox.TabIndex = 19;
@@ -691,7 +693,6 @@
         private System.Windows.Forms.TextBox titleTextBox;
         private System.Windows.Forms.DateTimePicker dateTimePicker;
         private System.Windows.Forms.TextBox developerTextBox;
-        private System.Windows.Forms.ComboBox genreComboBox;
         private System.Windows.Forms.TextBox seriesTextBox;
         private System.Windows.Forms.ComboBox playModeComboBox;
         private System.Windows.Forms.CheckBox extremeCheckBox;
@@ -725,5 +726,6 @@
         private System.Windows.Forms.OpenFileDialog openCurationFileDialog;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.ToolStripMenuItem selectFlashpointPathToolStripMenuItem;
+        private System.Windows.Forms.ComboBox genreComboBox;
     }
 }

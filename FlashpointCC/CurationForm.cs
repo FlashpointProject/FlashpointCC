@@ -358,6 +358,7 @@ namespace FlashpointCurator
             genreComboBox.SelectedIndex = Math.Max(0, genreComboBox.FindString(curation.Genre));
             developerTextBox.Text = curation.Developer;
             seriesTextBox.Text = curation.Series;
+            extremeCheckBox.Checked = (curation.Extreme == "Yes");
             playModeComboBox.SelectedIndex = Math.Max(0, playModeComboBox.FindString(curation.PlayMode));
             statusComboBox.SelectedIndex = Math.Max(0, statusComboBox.FindString(curation.Status));
             sourceTextBox.Text = curation.Source;
@@ -448,6 +449,7 @@ namespace FlashpointCurator
                 PlayMode = playModeComboBox.SelectedItem.ToString(),
                 Status = statusComboBox.SelectedItem.ToString(),
                 Source = sourceTextBox.Text,
+                Extreme = extremeCheckBox.Checked ? "Yes" : "No",
                 Platform = profile.Platform,
                 Publisher = publisherTextBox.Text,
                 LaunchCommand = commandLine,
@@ -472,12 +474,12 @@ namespace FlashpointCurator
                 var logoEntry = zip.CreateEntry(name + "/logo.png");
                 using (var entryStream = logoEntry.Open())
                 {
-                    logoPictureBox.Image.Save(entryStream, logoPictureBox.Image.RawFormat);
+                    logoPictureBox.Image.Save(entryStream, ImageFormat.Png);
                 }
                 var ssEntry = zip.CreateEntry(name + "/ss.png");
                 using (var entryStream = ssEntry.Open())
                 {
-                    screenshotPictureBox.Image.Save(entryStream, screenshotPictureBox.Image.RawFormat);
+                    screenshotPictureBox.Image.Save(entryStream, ImageFormat.Png);
                 }
                 source.CopyToZip(zip, name);
             }
@@ -510,8 +512,26 @@ namespace FlashpointCurator
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new CurationForm().Show();
-            Dispose(false);
+            if(MessageBox.Show("Are you sure you wish to reset all fields?", "New", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+                SetLogo(null);
+                SetScreenshot(null);
+                titleTextBox.Text = "";
+                seriesTextBox.Text = "";
+                profileComboBox.Text = "";
+                developerTextBox.Text = "";
+                publisherTextBox.Text = "";
+                sourceTextBox.Text = "";
+                dateTimePicker.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+                dateTimePicker.Checked = false;
+                genreComboBox.Text = "Genre";
+                playModeComboBox.Text = "Playmode";
+                statusComboBox.Text = "Status";
+                extremeCheckBox.Checked = false;
+                notesTextBox.Text = "";
+                authorNotesTextBox.Text = "";
+                treeView.Nodes.Clear();
+            }
         }
 
         private void importCurationToolStripMenuItem_Click(object sender, EventArgs e)
