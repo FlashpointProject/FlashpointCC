@@ -68,6 +68,7 @@
     <Compile Include="ProfileEditorForm.Designer.cs">
       <DependentUpon>ProfileEditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScreenCapture.cs" />
     <Compile Include="Utils\TreeNodeCollectionUtil.cs" />
     <Compile Include="Utils\ZipFileUtil.cs" />
     <Compile Include="Curation.cs" />

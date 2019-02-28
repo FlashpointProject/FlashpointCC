@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -26,6 +28,17 @@ namespace FlashpointCurator
         private Curation curation;
         private TreeNode executable;
         private string flashpointPath;
+        
+        public delegate void SetImage(Image image);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern int GetClientRect(System.IntPtr hWnd, ref Rectangle lpRECT);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
+        private static extern bool IsIconic(IntPtr hwnd);
+
+        [DllImport("user32.dll", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
+        public static extern int SetForegroundWindow(int hwnd);
 
         public CurationForm()
         {
@@ -44,15 +57,96 @@ namespace FlashpointCurator
             screenshotPictureBox.DragDrop += ScreenshotPictureBox_DragDrop;
             profileComboBox.Items.AddRange(ProfileEditorForm.LoadProfiles());
             genreComboBox.Items.AddRange(Curation.Genres);
-            genreComboBox.SelectedIndex = 0;
             playModeComboBox.Items.AddRange(Curation.Modes);
-            playModeComboBox.SelectedIndex = 0;
             statusComboBox.Items.AddRange(Curation.Statuses);
-            statusComboBox.SelectedIndex = 0;
             treeView.MouseDown += TreeView_MouseDown;
             treeView.AfterExpand += TreeView_AfterExpand;
             treeView.AfterCollapse += TreeView_AfterCollapse;
             Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+
+            SetImage SetL = SetLogo;
+            SetImage SetSS = SetScreenshot;
+
+            //Create instructions and Browse/Capture/Remove/Crop buttons for logo PictureBox
+            Label logoinstructions = new Label();
+            logoinstructions.TextAlign = ContentAlignment.MiddleCenter;
+            logoinstructions.AutoSize = true;
+            logoinstructions.Text = "Drag and drop an image here, or...";
+            logoPictureBox.Controls.Add(logoinstructions);
+            logoinstructions.Location = new Point((logoPictureBox.Width / 2) - (logoinstructions.Width / 2), (logoPictureBox.Height / 2) - (logoinstructions.Height / 2) - 15);
+
+            Button logocapturebutton = new Button();
+            logocapturebutton.Text = "Capture";
+            logoPictureBox.Controls.Add(logocapturebutton);
+            logocapturebutton.Click += (sender, e) => { CaptureWindow(SetL); };
+            logocapturebutton.Location = new Point((logoPictureBox.Width / 2) - logocapturebutton.Width - 5, (logoPictureBox.Height / 2) - (logocapturebutton.Height / 2) + 10);
+
+            Button logobrowsebutton = new Button();
+            logobrowsebutton.Text = "Browse...";
+            logoPictureBox.Controls.Add(logobrowsebutton);
+            logobrowsebutton.Click += (sender, e) => { BrowseForImage(SetL); };
+            logobrowsebutton.Location = new Point((logoPictureBox.Width / 2) + 5, (logoPictureBox.Height / 2) - (logobrowsebutton.Height / 2) + 10);
+
+            Button logoremovebutton = new Button();
+            logoremovebutton.Text = "X";
+            logoremovebutton.Name = "logoremovebutton";
+            logoremovebutton.Visible = false;
+            logoremovebutton.Width = 26;
+            logoremovebutton.BackColor = Color.PaleVioletRed;
+            logoremovebutton.ForeColor = Color.White;
+            logoremovebutton.Font = new Font(logoremovebutton.Font, FontStyle.Bold);
+            logoPictureBox.Controls.Add(logoremovebutton);
+            logoremovebutton.Click += (sender, e) => { SetLogo(null); };
+            logoremovebutton.Location = new Point(logoPictureBox.Width - logoremovebutton.Width - 5, 5);
+
+            //Button logocropbutton = new Button();
+            //logocropbutton.Text = "Crop";
+            //logocropbutton.Name = "logocropbutton";
+            //logocropbutton.Visible = false;
+            //logoPictureBox.Controls.Add(logocropbutton);
+            //logocropbutton.Location = new Point((logoPictureBox.Width / 2) - (logocropbutton.Width / 2), logoPictureBox.Height - logocropbutton.Height - 8);
+
+            //Create instructions and Browse/Capture/Remove buttons for screenshot PictureBox
+            Label screenshotinstructions = new Label();
+            screenshotinstructions.TextAlign = ContentAlignment.MiddleCenter;
+            screenshotinstructions.AutoSize = true;
+            screenshotinstructions.Text = "Drag and drop an image here, or...";
+            screenshotPictureBox.Controls.Add(screenshotinstructions);
+            screenshotinstructions.Location = new Point((screenshotPictureBox.Width / 2) - (screenshotinstructions.Width / 2), (screenshotPictureBox.Height / 2) - (screenshotinstructions.Height / 2) - 15);
+
+            Button screenshotcapturebutton = new Button();
+            screenshotcapturebutton.Text = "Capture";
+            screenshotPictureBox.Controls.Add(screenshotcapturebutton);
+            screenshotcapturebutton.Click += (sender, e) => { CaptureWindow(SetSS); };
+            screenshotcapturebutton.Location = new Point((screenshotPictureBox.Width / 2) - screenshotcapturebutton.Width - 5, (screenshotPictureBox.Height / 2) - (screenshotcapturebutton.Height / 2) + 10);
+
+            Button screenshotbrowsebutton = new Button();
+            screenshotbrowsebutton.Text = "Browse...";
+            screenshotPictureBox.Controls.Add(screenshotbrowsebutton);
+            screenshotbrowsebutton.Click += (sender, e) => { BrowseForImage(SetSS); };
+            screenshotbrowsebutton.Location = new Point((screenshotPictureBox.Width / 2) + 5, (screenshotPictureBox.Height / 2) - (screenshotbrowsebutton.Height / 2) + 10);
+
+            Button screenshotremovebutton = new Button();
+            screenshotremovebutton.Text = "X";
+            screenshotremovebutton.Name = "screenshotremovebutton";
+            screenshotremovebutton.Visible = false;
+            screenshotremovebutton.Width = 26;
+            screenshotremovebutton.BackColor = Color.PaleVioletRed;
+            screenshotremovebutton.ForeColor = Color.White;
+            screenshotremovebutton.Font = new Font(screenshotremovebutton.Font, FontStyle.Bold);
+            screenshotPictureBox.Controls.Add(screenshotremovebutton);
+            screenshotremovebutton.Click += (sender, e) => { SetScreenshot(null); };
+            screenshotremovebutton.Location = new Point(screenshotPictureBox.Width - screenshotremovebutton.Width - 5, 5);
+
+            //Create swap button
+            Button swapbutton = new Button();
+            swapbutton.Text = "<- Swap ->";
+            swapbutton.Visible = false;
+            swapbutton.Name = "swapbutton";
+            this.Controls.Add(swapbutton);
+            swapbutton.Click += (sender, e) => { SwapPictures(); };
+            swapbutton.Location = new Point(tableLayoutPanel2.Location.X + (tableLayoutPanel2.Width/2) - (swapbutton.Width/2), tableLayoutPanel2.Location.Y + tableLayoutPanel2.Height - 10);
+            swapbutton.BringToFront();
         }
 
         private void ProfileEditor_ProfileChange(Profile profile)
@@ -124,22 +218,120 @@ namespace FlashpointCurator
 
         private void ScreenshotPictureBox_Paint(object sender, PaintEventArgs e)
         {
-            ControlPaint.DrawBorder(e.Graphics, e.ClipRectangle, Color.Gray, ButtonBorderStyle.Solid);
+            Pen pen = new Pen(Color.FromArgb(255, 170, 170, 170), 2.0F);
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            e.Graphics.DrawRectangle(pen, e.ClipRectangle.X + 1, e.ClipRectangle.Y + 1, e.ClipRectangle.Width - 2, e.ClipRectangle.Height - 2);
+            pen.Dispose();
         }
 
         private void LogoPictureBox_Paint(object sender, PaintEventArgs e)
         {
-            ControlPaint.DrawBorder(e.Graphics, e.ClipRectangle, Color.Gray, ButtonBorderStyle.Solid);
+            Pen pen = new Pen(Color.FromArgb(255, 170, 170, 170), 2.0F);
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            e.Graphics.DrawRectangle(pen, e.ClipRectangle.X + 1, e.ClipRectangle.Y + 1, e.ClipRectangle.Width - 2, e.ClipRectangle.Height - 2);
+            pen.Dispose();
         }
 
         public void SetLogo(Image image)
         {
             logoPictureBox.Image = image;
+            this.Controls.Find("swapbutton", false)[0].Visible = (logoPictureBox.Image == null && screenshotPictureBox.Image == null) ? false : true;
+
+            foreach (Control child in logoPictureBox.Controls)
+            {
+                child.Visible = (image == null) ? true : false;
+                if (child.Name == "logocropbutton" | child.Name == "logoremovebutton")
+                {
+                    child.Visible = (image == null) ? false : true;
+                }
+            }
+
+            this.Refresh();
         }
 
         public void SetScreenshot(Image image)
         {
             screenshotPictureBox.Image = image;
+            this.Controls.Find("swapbutton", false)[0].Visible = (logoPictureBox.Image == null && screenshotPictureBox.Image == null) ? false : true;
+
+            foreach (Control child in screenshotPictureBox.Controls)
+            {
+                child.Visible = (image == null) ? true : false;
+                if (child.Name == "screenshotremovebutton")
+                {
+                    child.Visible = (image == null) ? false : true;
+                }
+            }
+
+            this.Refresh();
+        }
+
+        public void CaptureWindow(SetImage pass)
+        {
+            Profile profile = (Profile)profileComboBox.SelectedItem;
+
+            if(profile == null)
+            {
+                MessageBox.Show("Please select a Profile", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Process[] players = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(profile.ApplicationPath));
+
+            if(players.Length == 0)
+            {
+                MessageBox.Show("No game window detected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            IntPtr player = players[0].MainWindowHandle;
+
+            Rectangle pic = new Rectangle();
+            GetClientRect(player, ref pic);
+
+            ScreenShot.ScreenCapture screenshot = new ScreenShot.ScreenCapture();
+            Bitmap image = (Bitmap)screenshot.CaptureWindow(player);
+
+            int border = (image.Width - pic.Width) / 2;
+            int top = image.Height - pic.Height - border;
+
+            Rectangle crop = new Rectangle(border, top, pic.Width, pic.Height);
+
+            if(IsIconic(player) | crop.IsEmpty | crop.Width == 0 | crop.Height == 0)
+            {
+                MessageBox.Show("Please make sure the game is not minimized", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                SetForegroundWindow((int)player);
+                SendKeys.SendWait("~");
+                return;
+            }
+
+            else
+            {
+                Bitmap cropped = image.Clone(crop, image.PixelFormat);
+                pass(cropped);
+            }
+        }
+
+        public void BrowseForImage(SetImage pass)
+        {
+            OpenFileDialog browse = new OpenFileDialog();
+            browse.FilterIndex = 2;
+            browse.Filter = "BMP Image (*.bmp)|*.bmp|PNG Image (*.png)|*.png|JPEG Image (*.jpg, *.jpeg)|*.jpg; *.jpeg|GIF Image (*.gif)|*.gif";
+            browse.CheckFileExists = true;
+            browse.CheckPathExists = true;
+            browse.ValidateNames = true;
+            DialogResult result = browse.ShowDialog();
+            if(result == DialogResult.OK)
+            {
+                pass(LoadImage(browse.FileName));
+            }
+        }
+
+        public void SwapPictures()
+        {
+            Image temp = logoPictureBox.Image;
+            SetLogo(screenshotPictureBox.Image);
+            SetScreenshot(temp);
         }
 
         public void SetContent(IContentSource content)
@@ -193,12 +385,18 @@ namespace FlashpointCurator
             e.Effect = DragDropEffects.Copy;
         }
 
+        public Image LoadImage(string path)
+        {
+            return Image.FromFile(path);
+        }
+
         private void ScreenshotPictureBox_DragDrop(object sender, DragEventArgs e)
         {
             foreach (string pic in ((string[])e.Data.GetData(DataFormats.FileDrop)))
             {
-                Image img = Image.FromFile(pic);
+                Image img = LoadImage(pic);
                 screenshotPictureBox.Image = img;
+                SetScreenshot(img);
             }
         }
 
@@ -206,8 +404,8 @@ namespace FlashpointCurator
         {
             foreach (string pic in ((string[])e.Data.GetData(DataFormats.FileDrop)))
             {
-                Image img = Image.FromFile(pic);
-                logoPictureBox.Image = img;
+                Image img = LoadImage(pic);
+                SetLogo(img);
             }
         }
 
@@ -440,6 +638,11 @@ namespace FlashpointCurator
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void CurationForm_Move(object sender, EventArgs e)
+        {
+            this.Refresh();
         }
     }
 }
